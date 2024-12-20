@@ -4,7 +4,7 @@ using namespace std;
 int arrdata[100];
 int n;
 
-
+//menu
 
 void masukkanData();
 void tampilkanData();
