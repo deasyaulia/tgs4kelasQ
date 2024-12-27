@@ -27,6 +27,12 @@ void dMenu()
     cout << "Masukan angka :";
 }
 
+void tampilkanData(int p)
+{
+    cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << 
+    sikc[p].ipk << endl;
+}
+
 int main()
 {
     int pos = -1;
@@ -53,8 +59,15 @@ int main()
             cin >> sikc[pos].ipk;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             break;
+        case '2':
+        {
+            cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << 
+            sikc[p].ipk << endl;
+            break;
+        }
+
     return 0;
+    }
+  }
 }
- }
- }
 }
