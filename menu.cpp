@@ -1,9 +1,8 @@
 #include <iostream>
 #include <string>
 #include <conio.h>
-#include <limits>
-using namespace std;
 
+using namespace std;
 struct mahasiswa
 {
     string nim;
@@ -30,24 +29,42 @@ void dMenu()
 
 void tampilkanData(int p)
 {
-    cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << sikc[p].ipk << endl;
+    cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << 
+    sikc[p].ipk << endl;
 }
 
 void perbaikanData(int p)
 {
     system("cls");
-    cout << "Masukkan nama: ";
+    fflush(stdin);
+    cout << "masukan nama: ";
     getline(cin, sikc[p].nama);
-    cout << "Masukkan alamat: ";
+    cout << "masukan alamat: ";
     getline(cin, sikc[p].alamat);
-    cout << "Masukkan IPK: ";
+    cout << "masukan ipk: ";
     cin >> sikc[p].ipk;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+void hapusData(int p) {
+    tampilkanData(p);
+    cout << "Masukkan nomor data yang ingin dihapus: ";
+    cin >> p;
+    p--;
+    if (p >= 0 && p <= pos) {
+        for (int i = p; i < pos; i++) {
+            sikc[i] = sikc[i + 1];
+        }
+        pos--;
+        cout << "Data berhasil dihapus!" << endl;
+    } else {
+        cout << "Nomor tidak valid!" << endl;
+    }
+}
+
 int main()
 {
-    char pl;
+    int pos = -1;
 
     do
     {
@@ -57,38 +74,29 @@ int main()
         switch (pl)
         {
         case '1':
-            if (pos < 29) // Pastikan tidak melampaui batas array
-            {
-                pos++;
-                system("cls");
-                cout << "Masukkan nim: ";
-                getline(cin, sikc[pos].nim);
-                cout << "Masukkan nama: ";
-                getline(cin, sikc[pos].nama);
-                cout << "Masukkan alamat: ";
-                getline(cin, sikc[pos].alamat);
-                cout << "Masukkan IPK: ";
-                cin >> sikc[pos].ipk;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }
-            else
-            {
-                cout << "Data sudah penuh!" << endl;
-            }
-            break;
-
-        case '2':
+        {
+            pos++;
             system("cls");
-            if (pos == -1) {
-                cout << "Belum ada data!" << endl;
-            } else {
-                for (int i = 0; i <= pos; i++) {
-                    tampilkanData(i);
-                }
-            }
+            fflush(stdin);
+            cout << "masukan nim: ";
+            getline(cin, sikc[pos].nim);
+            cout << "masukan nama: ";
+            getline(cin, sikc[pos].nama);
+            cout << "masukan alamat: ";
+            getline(cin, sikc[pos].alamat);
+            cout << "masukan ipk: ";
+            cin >> sikc[pos].ipk;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             break;
-
+        }
+        case '2':
+        {
+            cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << 
+            sikc[p].ipk << endl;
+            break;
+        }
         case '3':
+        {
             system("cls");
             int index;
             cout << "Masukkan nomor data yang ingin diperbaiki: ";
@@ -97,29 +105,30 @@ int main()
             if (index >= 0 && index <= pos) {
                 perbaikanData(index);
             } else {
-                cout << "Nomor tidak valid!" << endl;
+                cout << "nomor tidak valid!\n";
             }
-            break;
-
-        case '4':
-            // Fungsi menghapus data bisa ditambahkan di sini jika perlu
-            break;
-
+            break; 
+        }
+          case '4':
+        {
+            system("cls");
+            int index;
+            cout << "Masukkan nomor data yang ingin dihapus: ";
+            cin >> index;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            hapusData(index);
+            getch();
+            break; 
+        }
         case '5':
-            cout << "Terima kasih, keluar..." << endl;
             break;
-
         default:
-            cout << "Pilihan tidak valid!" << endl;
+            system("cls");
+            cout << "Pilihan Tidak Tersedia";
+            getch();
             break;
         }
-        
-        if (pl != '5') {
-            cout << "Tekan sembarang tombol untuk melanjutkan...";
-            getch(); // Menunggu input sebelum kembali ke menu
-        }
-
     } while (pl != '5');
 
     return 0;
-}
+    }
