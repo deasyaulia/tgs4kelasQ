@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <conio.h>
+#include <limits>
 using namespace std;
 
 struct mahasiswa
@@ -29,13 +30,24 @@ void dMenu()
 
 void tampilkanData(int p)
 {
-    cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << 
-    sikc[p].ipk << endl;
+    cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << sikc[p].ipk << endl;
+}
+
+void perbaikanData(int p)
+{
+    system("cls");
+    cout << "Masukkan nama: ";
+    getline(cin, sikc[p].nama);
+    cout << "Masukkan alamat: ";
+    getline(cin, sikc[p].alamat);
+    cout << "Masukkan IPK: ";
+    cin >> sikc[p].ipk;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 int main()
 {
-    int pos = -1;
+    char pl;
 
     do
     {
@@ -45,29 +57,69 @@ int main()
         switch (pl)
         {
         case '1':
-        {
-            pos++;
-            system("cls");
-            fflush(stdin);
-            cout << "masukan nim: ";
-            getline(cin, sikc[pos].nim);
-            cout << "masukan nama: ";
-            getline(cin, sikc[pos].nama);
-            cout << "masukan alamat: ";
-            getline(cin, sikc[pos].alamat);
-            cout << "masukan ipk: ";
-            cin >> sikc[pos].ipk;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (pos < 29) // Pastikan tidak melampaui batas array
+            {
+                pos++;
+                system("cls");
+                cout << "Masukkan nim: ";
+                getline(cin, sikc[pos].nim);
+                cout << "Masukkan nama: ";
+                getline(cin, sikc[pos].nama);
+                cout << "Masukkan alamat: ";
+                getline(cin, sikc[pos].alamat);
+                cout << "Masukkan IPK: ";
+                cin >> sikc[pos].ipk;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }
+            else
+            {
+                cout << "Data sudah penuh!" << endl;
+            }
             break;
+
         case '2':
-        {
-            cout << sikc[p].nim << " , " << sikc[p].nama << " , " << sikc[p].alamat << " , " << 
-            sikc[p].ipk << endl;
+            system("cls");
+            if (pos == -1) {
+                cout << "Belum ada data!" << endl;
+            } else {
+                for (int i = 0; i <= pos; i++) {
+                    tampilkanData(i);
+                }
+            }
+            break;
+
+        case '3':
+            system("cls");
+            int index;
+            cout << "Masukkan nomor data yang ingin diperbaiki: ";
+            cin >> index;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (index >= 0 && index <= pos) {
+                perbaikanData(index);
+            } else {
+                cout << "Nomor tidak valid!" << endl;
+            }
+            break;
+
+        case '4':
+            // Fungsi menghapus data bisa ditambahkan di sini jika perlu
+            break;
+
+        case '5':
+            cout << "Terima kasih, keluar..." << endl;
+            break;
+
+        default:
+            cout << "Pilihan tidak valid!" << endl;
             break;
         }
+        
+        if (pl != '5') {
+            cout << "Tekan sembarang tombol untuk melanjutkan...";
+            getch(); // Menunggu input sebelum kembali ke menu
+        }
+
+    } while (pl != '5');
 
     return 0;
-    }
-  }
-}
 }
